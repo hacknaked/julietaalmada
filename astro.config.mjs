@@ -3,12 +3,13 @@ import { defineConfig, fontProviders } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
-// Replace with your production URL after deploying to Vercel / Netlify.
+// Replace with your production URL after deploying.
 // It powers the sitemap and the canonical / Open Graph URLs in BaseLayout.
-const SITE_URL = 'https://astro-starter-portfolio.vercel.app';
+const SITE_URL = 'https://hacknaked.github.io';
 
 export default defineConfig({
   site: SITE_URL,
+  base: '/julietaalmada',
 
   integrations: [sitemap()],
 

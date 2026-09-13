@@ -11,6 +11,11 @@ const sorted = [...allWork].sort((a, b) => b.data.date.valueOf() - a.data.date.v
 const featured = sorted.filter((entry) => entry.data.featured);
 const rest = sorted.filter((entry) => !entry.data.featured);
 const selected = [...featured, ...rest].slice(0, 5);
+const base = import.meta.env.BASE_URL.endsWith('/')
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+const charlasPath = `${base}charlas`;
+const sobreMiPath = `${base}sobre-mi`;
 ---
 
 <BaseLayout title={SITE.name}>
@@ -29,7 +34,7 @@ const selected = [...featured, ...rest].slice(0, 5);
     </p>
 
     <div class="mt-8 flex flex-wrap items-center gap-3">
-      <Button href="/work" variant="solid">View the work →</Button>
+      <Button href={charlasPath} variant="solid">Ver charlas →</Button>
       <Button href="#hablemos" variant="ghost">Hablemos</Button>
     </div>
   </section>
@@ -43,10 +48,10 @@ const selected = [...featured, ...rest].slice(0, 5);
       allWork.length > selected.length && (
         <div class="mt-6">
           <a
-            href="/work"
+            href={charlasPath}
             class="text-ink-soft hover:text-signal font-mono text-xs transition-colors"
           >
-            View all {allWork.length} projects →
+            Ver todas las charlas →
           </a>
         </div>
       )
@@ -58,7 +63,7 @@ const selected = [...featured, ...rest].slice(0, 5);
     <p class="text-ink-soft max-w-xl">
       {SITE.description}
     </p>
-    <a href="/sobre-mi" class="text-signal mt-4 inline-block font-mono text-xs hover:underline">
+    <a href={sobreMiPath} class="text-signal mt-4 inline-block font-mono text-xs hover:underline">
       Más sobre mi forma de trabajo →
     </a>
   </section>
