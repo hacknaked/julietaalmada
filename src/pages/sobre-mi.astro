@@ -1,0 +1,47 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Button from '@/components/Button.astro';
+import { SITE } from '@/site.config';
+
+const tools = ['TypeScript', 'Astro', 'React', 'Figma', 'Tailwind CSS', 'Node.js'];
+---
+
+<BaseLayout
+  title="Sobre mí"
+  description={'Conocé más sobre mi formación, experiencia y la manera en que acompaño a niños, adolescentes y familias en sus procesos de aprendizaje.'}
+>
+  <section class="mx-auto max-w-3xl px-6 pt-16 pb-24 sm:pt-24">
+    <p class="text-ink-soft mb-6 font-mono text-xs tracking-[0.2em] uppercase">Sobre mí</p>
+
+    <h1 class="font-display text-ink max-w-xl text-3xl font-medium sm:text-4xl">
+      Hola, soy Julieta Almada, psicopedagoga y docente
+    </h1>
+
+    <div class="prose prose-sm sm:prose-base mt-8 max-w-xl">
+      <p>
+        Acompaño a niños, adolescentes y familias para comprender qué está sucediendo en cada
+        proceso de aprendizaje y encontrar estrategias claras, respetuosas y adaptadas a cada
+        situación.
+      </p>
+      <p>
+        También desarrollo charlas y espacios de orientación para familias e instituciones sobre
+        aprendizaje, crianza y acompañamiento de niños y adolescentes.
+      </p>
+    </div>
+
+    <!-- <div class="mt-10">
+      <p class="text-ink-soft mb-3 font-mono text-xs tracking-[0.2em] uppercase">Tools</p>
+      <ul class="flex flex-wrap gap-2">
+        {
+          tools.map((tool) => (
+            <li class="border-line text-ink-soft rounded-full border px-3 py-1 font-mono text-xs">
+              {tool}
+            </li>
+          ))
+        }
+      </ul>
+    </div> -->
+
+    <Button href={`mailto:${SITE.email}`} class="mt-10">Hablemos</Button>
+  </section>
+</BaseLayout>
