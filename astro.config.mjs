@@ -5,11 +5,10 @@ import tailwindcss from '@tailwindcss/vite';
 
 // Replace with your production URL after deploying.
 // It powers the sitemap and the canonical / Open Graph URLs in BaseLayout.
-const SITE_URL = 'https://hacknaked.github.io';
+const SITE_URL = 'https://julietaalmada.ar';
 
 export default defineConfig({
   site: SITE_URL,
-  base: '/julietaalmada',
 
   integrations: [sitemap()],
 
