@@ -3,7 +3,7 @@
   "type": "module",
   "version": "1.0.0",
   "private": false,
-  "description": "A minimal, professional portfolio starter for Astro — TypeScript, Tailwind CSS v4, Content Collections, dark mode, and full SEO, with no unnecessary dependencies.",
+  "description": "A minimal, professional portfolio starter for Astro — TypeScript, Tailwind CSS v4, dark mode, and full SEO, with no unnecessary dependencies.",
   "keywords": [
     "astro",
     "astro-theme",

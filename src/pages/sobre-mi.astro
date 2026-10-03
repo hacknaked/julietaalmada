@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Button from '@/components/Button.astro';
-import { SITE } from '@/site.config';
 
 const tools = ['TypeScript', 'Astro', 'React', 'Figma', 'Tailwind CSS', 'Node.js'];
 ---
@@ -12,36 +11,29 @@ const tools = ['TypeScript', 'Astro', 'React', 'Figma', 'Tailwind CSS', 'Node.js
 >
   <section class="mx-auto max-w-3xl px-6 pt-16 pb-24 sm:pt-24">
     <p class="text-ink-soft mb-6 font-mono text-xs tracking-[0.2em] uppercase">Sobre mí</p>
-
     <h1 class="font-display text-ink max-w-xl text-3xl font-medium sm:text-4xl">
-      Hola, soy Julieta Almada, psicopedagoga y docente
+      Hola, soy Julieta Almada,<br /> licenciada en psicopedagogía y docente
     </h1>
+    <div class="grid items-start gap-12 md:grid-cols-[minmax(0,1fr)_16rem]">
+      <div>
+        <div class="prose prose-sm sm:prose-base mt-8 max-w-xl">
+          <p>
+            Desde pequeña me interesa el aprendizaje. La curiosidad me llevó siempre a querer saber
+            un poco más, conocer algo diferente, entender cómo funciona el mundo.
+          </p>
+          <p>
+            Durante mi adolescencia, en rondas y encuentros para estudiar, comenzó mi camino de
+            observación: mirar, preguntarme y tratar de descifrar cómo aprendían los otros.
+          </p>
+          <p>
+            Hoy, continúo con esa mente de principiante acompañando los aprendizajes de niños,
+            niñas, adolescentes y sus contextos familiares, educativos o sociales.
+          </p>
+        </div>
+        <Button href="/#hablemos" class="mt-10">Hablemos</Button>
+      </div>
 
-    <div class="prose prose-sm sm:prose-base mt-8 max-w-xl">
-      <p>
-        Acompaño a niños, adolescentes y familias para comprender qué está sucediendo en cada
-        proceso de aprendizaje y encontrar estrategias claras, respetuosas y adaptadas a cada
-        situación.
-      </p>
-      <p>
-        También desarrollo charlas y espacios de orientación para familias e instituciones sobre
-        aprendizaje, crianza y acompañamiento de niños y adolescentes.
-      </p>
+      <img src="/juli2.jpg" alt="Julieta Almada" class="w-full max-w-64 rounded-full" />
     </div>
-
-    <!-- <div class="mt-10">
-      <p class="text-ink-soft mb-3 font-mono text-xs tracking-[0.2em] uppercase">Tools</p>
-      <ul class="flex flex-wrap gap-2">
-        {
-          tools.map((tool) => (
-            <li class="border-line text-ink-soft rounded-full border px-3 py-1 font-mono text-xs">
-              {tool}
-            </li>
-          ))
-        }
-      </ul>
-    </div> -->
-
-    <Button href={`mailto:${SITE.email}`} class="mt-10">Hablemos</Button>
   </section>
 </BaseLayout>

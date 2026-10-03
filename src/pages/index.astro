@@ -1,20 +1,14 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Button from '@/components/Button.astro';
-import WorkRow from '@/components/WorkRow.astro';
 import SectionHeading from '@/components/SectionHeading.astro';
+import MailIcon from '@/assets/icons/mail.svg';
+import WhatsAppIcon from '@/assets/icons/whatsapp.svg';
 import { SITE } from '@/site.config';
 
-const allWork = await getCollection('work', ({ data }) => !data.draft);
-const sorted = [...allWork].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-const featured = sorted.filter((entry) => entry.data.featured);
-const rest = sorted.filter((entry) => !entry.data.featured);
-const selected = [...featured, ...rest].slice(0, 5);
 const base = import.meta.env.BASE_URL.endsWith('/')
   ? import.meta.env.BASE_URL
   : `${import.meta.env.BASE_URL}/`;
-const charlasPath = `${base}charlas`;
 const sobreMiPath = `${base}sobre-mi`;
 ---
 
@@ -24,45 +18,71 @@ const sobreMiPath = `${base}sobre-mi`;
       <span class="bg-signal h-1.5 w-1.5 rounded-full" aria-hidden="true"></span>
       {SITE.status}
     </p>
-
     <h1 class="font-display text-ink max-w-2xl text-4xl leading-[1.1] font-medium sm:text-5xl">
       {SITE.tagline}
     </h1>
-
-    <p class="text-ink-soft mt-6 max-w-md">
+    <p class="text-ink-soft mt-6 max-w-md text-xl">
       {SITE.role}
     </p>
 
     <div class="mt-8 flex flex-wrap items-center gap-3">
-      <Button href={charlasPath} variant="solid">Ver charlas →</Button>
-      <Button href="#hablemos" variant="ghost">Hablemos</Button>
+      <Button href="#hablemos" variant="solid">Hacer una consulta</Button>
     </div>
   </section>
 
   <section id="work" class="mx-auto max-w-3xl px-6 pb-20">
-    <SectionHeading eyebrow="Selected work" count={allWork.length} />
-    <div>
-      {selected.map((entry) => <WorkRow entry={entry} />)}
+    <SectionHeading eyebrow="Consultorio psicopedagogico" />
+    <div class="text-ink-soft prose prose-sm sm:prose-base max-w-xl">
+      <p>
+        A partir de conocer el perfil de aprendizaje de un niño, niña o adolescente, se pueden
+        establecer objetivos, planear herramientas, estrategias y propiciar un espacio que le
+        permita desarrollar su máximo potencial, tanto en el espacio individual como también en los
+        diferentes ámbitos en los que participa. A lo largo del tratamiento, el trabajo se dará de
+        manera conjunta con el niño, su familia y la escuela, buscando formar un equipo comprometido
+        con sus aprendizajes.
+      </p>
     </div>
-    {
-      allWork.length > selected.length && (
-        <div class="mt-6">
-          <a
-            href={charlasPath}
-            class="text-ink-soft hover:text-signal font-mono text-xs transition-colors"
-          >
-            Ver todas las charlas →
-          </a>
-        </div>
-      )
-    }
+    <a href={sobreMiPath} class="text-signal mt-4 inline-block font-mono text-xs hover:underline">
+      Más sobre mi forma de trabajo →
+    </a>
   </section>
 
-  <section id="about" class="mx-auto max-w-3xl px-6 pb-20">
-    <SectionHeading eyebrow="Mi forma de trabajo" />
-    <p class="text-ink-soft max-w-xl">
-      {SITE.description}
-    </p>
+  <section id="work" class="mx-auto max-w-3xl px-6 pb-20">
+    <SectionHeading eyebrow="Evaluaciones con orientación neuropsicológica" />
+    <div class="text-ink-soft prose prose-sm sm:prose-base max-w-xl">
+      <p>
+        Un proceso de evaluación psicopedagógica puede comenzar a partir de una inquietud o pregunta
+        que surge en la familia o por sugerencia de una institución o profesional con el que
+        consultamos. Este proceso tiene el objetivo de conocer y caracterizar el perfil de
+        aprendizaje de la persona por la que se consulta.
+      </p>
+      <p>
+        Comienza con una entrevista a la familia y continúa con una serie de encuentros con el niño,
+        niña o adolescente, en los cuales se propicia un vínculo de confianza, se administran
+        pruebas y se realizan distintas actividades.
+      </p>
+      <p>
+        Luego se coordina un nuevo encuentro con la familia para hacer una devolución e informar
+        aquello observado, analizado y concluido durante la evaluación. A partir de allí, se
+        plantean en conjunto las sugerencias y estrategias de acompañamiento.
+      </p>
+    </div>
+    <a href={sobreMiPath} class="text-signal mt-4 inline-block font-mono text-xs hover:underline">
+      Más sobre mi forma de trabajo →
+    </a>
+  </section>
+
+  <section id="work" class="mx-auto max-w-3xl px-6 pb-20">
+    <SectionHeading eyebrow="Consultas familiares" />
+    <div class="text-ink-soft prose prose-sm sm:prose-base max-w-xl">
+      <p>
+        Las consultas familiares son un espacio de orientación para conversar sobre inquietudes,
+        dudas o situaciones que pueden surgir en la vida cotidiana. A partir del diálogo, buscamos
+        comprender mejor lo que está sucediendo, ordenar las preguntas y pensar juntos posibles
+        formas de acompañar a niños y adolescentes con mayor claridad y seguridad. Los encuentros
+        son individuales con cada familia y pueden realizarse de manera presencial o virtual.
+      </p>
+    </div>
     <a href={sobreMiPath} class="text-signal mt-4 inline-block font-mono text-xs hover:underline">
       Más sobre mi forma de trabajo →
     </a>
@@ -70,14 +90,33 @@ const sobreMiPath = `${base}sobre-mi`;
 
   <section id="hablemos" class="mx-auto max-w-3xl px-6 pb-24">
     <SectionHeading eyebrow="Hablemos" />
-    <p class="font-display text-ink max-w-lg text-2xl sm:text-3xl">
-      ¿Querés hacer una consulta o coordinar una entrevista?
-    </p>
-    <a
-      href={`mailto:${SITE.email}`}
-      class="text-signal mt-4 inline-flex items-center gap-2 font-mono hover:underline"
-    >
-      {SITE.email}
-    </a>
+
+    <div class="text-ink-soft prose prose-sm sm:prose-base max-w-xl">
+      <img src="/hablemos.jpeg" alt="" aria-hidden="true" class="mx-auto mb-6 rounded-xl" />
+      <p class="font-display text-ink max-w-lg text-2xl sm:text-3xl">
+        ¿Querés hacer una consulta o coordinar una entrevista?
+      </p>
+
+      <p class="text-ink-soft max-w-xl">
+        {SITE.description}
+      </p>
+    </div>
+
+    <div class="text-signal mt-4 flex flex-wrap items-center gap-2 font-mono">
+      <a href={`mailto:${SITE.email}`} class="inline-flex items-center gap-2 hover:underline">
+        <MailIcon aria-hidden="true" class="h-4 w-4" />
+        {SITE.email}
+      </a>
+      <span aria-hidden="true">•</span>
+      <a
+        href="https://wa.me/5491140959318"
+        class="inline-flex items-center gap-2 hover:underline"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <WhatsAppIcon aria-hidden="true" class="h-4 w-4" />
+        +54 9 11 4095-9318
+      </a>
+    </div>
   </section>
 </BaseLayout>
