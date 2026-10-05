@@ -7,8 +7,8 @@ type SocialLink = {
 
 export const SITE = {
   name: 'Julieta Almada',
-  role: 'Evaluación, orientación y acompañamiento psicopedagógico',
-  email: 'julieta.almada565@gmail.com',
+  role: 'Evaluación, orientación y tratamiento psicopedagógico',
+  email: 'consultas@julietaalmada.ar',
   tagline: 'Psicopedagoga & docente',
   description:
     'Trabajo junto a niños, adolescentes y familias para comprender qué está sucediendo en cada proceso de aprendizaje y encontrar estrategias posibles para avanzar.',
