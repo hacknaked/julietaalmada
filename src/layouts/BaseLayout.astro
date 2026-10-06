@@ -17,17 +17,38 @@ const { title, description = SITE.description, image = '/og-image.jpg' } = Astro
 <!doctype html>
 <html lang={SITE.locale}>
   <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YPBYJQS4WG"></script>
     <script is:inline>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
+      function loadGoogleAnalytics() {
+        if (window.googleAnalyticsLoaded) return;
+
+        window.googleAnalyticsLoaded = true;
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function () {
+          window.dataLayer.push(arguments);
+        };
+        window.gtag('js', new Date());
+        window.gtag('config', 'G-YPBYJQS4WG');
+
+        const script = document.createElement('script');
+        script.async = true;
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-YPBYJQS4WG';
+        document.head.append(script);
       }
-      gtag('js', new Date());
-      gtag('config', 'G-YPBYJQS4WG');
+
+      function scheduleGoogleAnalytics() {
+        if ('requestIdleCallback' in window) {
+          window.requestIdleCallback(loadGoogleAnalytics, { timeout: 4000 });
+        } else {
+          window.setTimeout(loadGoogleAnalytics, 2000);
+        }
+      }
+
+      if (document.readyState === 'complete') {
+        scheduleGoogleAnalytics();
+      } else {
+        window.addEventListener('load', scheduleGoogleAnalytics, { once: true });
+      }
     </script>
-    <!-- End Google Tag -->
     <BaseHead title={title} description={description} image={image} />
   </head>
   <body id="top" class="bg-paper text-ink">

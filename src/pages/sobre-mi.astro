@@ -1,4 +1,6 @@
 ---
+import { Picture } from 'astro:assets';
+import portraitImage from '@/assets/images/juli2.jpg';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Button from '@/components/Button.astro';
 
@@ -33,7 +35,15 @@ const tools = ['TypeScript', 'Astro', 'React', 'Figma', 'Tailwind CSS', 'Node.js
         <Button href="/#hablemos" class="mt-10">Hablemos</Button>
       </div>
 
-      <img src="/juli2.jpg" alt="Julieta Almada" class="mx-auto w-full max-w-64 rounded-full" />
+      <Picture
+        src={portraitImage}
+        formats={['avif', 'webp']}
+        layout="constrained"
+        width={256}
+        alt="Julieta Almada"
+        loading="eager"
+        class="mx-auto w-full max-w-64 rounded-full"
+      />
     </div>
   </section>
 </BaseLayout>

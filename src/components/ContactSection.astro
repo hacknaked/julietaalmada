@@ -1,4 +1,6 @@
 ---
+import { Picture } from 'astro:assets';
+import contactImage from '@/assets/images/hablemos.jpg';
 import LocationIcon from '@/assets/icons/location.svg';
 import MailIcon from '@/assets/icons/mail.svg';
 import WhatsAppIcon from '@/assets/icons/whatsapp.svg';
@@ -10,7 +12,18 @@ import { SITE } from '@/site.config';
   <SectionHeading eyebrow="Hablemos" />
 
   <div class="text-ink-soft prose prose-sm sm:prose-base max-w-xl">
-    <img src="/hablemos.jpeg" alt="" aria-hidden="true" class="mx-auto mb-6 rounded-xl" />
+    <Picture
+      src={contactImage}
+      formats={['avif', 'webp']}
+      layout="constrained"
+      width={576}
+      widths={[320, 480, 576, 768]}
+      sizes="(max-width: 624px) calc(100vw - 3rem), 576px"
+      alt=""
+      aria-hidden="true"
+      loading="lazy"
+      class="mx-auto mb-6 rounded-xl"
+    />
     <p class="font-display text-ink max-w-lg text-2xl sm:text-3xl">
       ¿Querés hacer una consulta o coordinar una entrevista?
     </p>
@@ -53,12 +66,6 @@ import { SITE } from '@/site.config';
     </li>
   </ul>
 
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-    crossorigin=""
-  />
   <div
     id="service-area-map"
     class="mt-6 h-80 max-w-xl overflow-hidden rounded-xl"
@@ -69,11 +76,6 @@ import { SITE } from '@/site.config';
   <p id="service-area-caption" class="text-ink-soft mt-2 hidden text-xs">
     Área aproximada de atención
   </p>
-  <script
-    is:inline
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-    crossorigin=""></script>
   <script is:inline>
     function initContactMap() {
       const toggle = document.getElementById('service-area-toggle');
@@ -86,26 +88,94 @@ import { SITE } from '@/site.config';
       const center = [-34.63505, -58.4587];
       let map;
 
-      toggle.addEventListener('click', () => {
+      function loadLeafletStyles() {
+        if (document.getElementById('leaflet-styles')) return Promise.resolve();
+
+        const stylesheet = document.createElement('link');
+        stylesheet.id = 'leaflet-styles';
+        stylesheet.rel = 'stylesheet';
+        stylesheet.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+        stylesheet.integrity = 'sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=';
+        stylesheet.crossOrigin = '';
+
+        return new Promise((resolve, reject) => {
+          stylesheet.addEventListener('load', resolve, { once: true });
+          stylesheet.addEventListener(
+            'error',
+            (error) => {
+              stylesheet.remove();
+              reject(error);
+            },
+            { once: true },
+          );
+          document.head.append(stylesheet);
+        });
+      }
+
+      async function loadLeaflet() {
+        const stylesLoaded = loadLeafletStyles();
+
+        if (window.L) {
+          await stylesLoaded;
+          return window.L;
+        }
+
+        const leafletLoaded = new Promise((resolve, reject) => {
+          const script = document.createElement('script');
+          script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+          script.integrity = 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=';
+          script.crossOrigin = '';
+          script.addEventListener('load', () => resolve(window.L), { once: true });
+          script.addEventListener(
+            'error',
+            (error) => {
+              script.remove();
+              reject(error);
+            },
+            { once: true },
+          );
+          document.head.append(script);
+        });
+
+        const [, leaflet] = await Promise.all([stylesLoaded, leafletLoaded]);
+        return leaflet;
+      }
+
+      toggle.addEventListener('click', async () => {
         const isOpen = toggle.getAttribute('aria-expanded') === 'true';
         toggle.setAttribute('aria-expanded', String(!isOpen));
         mapElement.hidden = isOpen;
         caption.classList.toggle('hidden', isOpen);
 
         if (!isOpen && !map) {
-          map = L.map(mapElement).setView(center, 14);
-          L.circle(center, {
-            radius: 2000,
-            color: '#ff6900',
-            fillColor: '#ff6900',
-            fillOpacity: 0.16,
-          }).addTo(map);
+          toggle.disabled = true;
 
-          L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; OpenStreetMap contributors',
-            maxZoom: 19,
-          }).addTo(map);
-          L.marker(center).addTo(map).bindPopup('Bialet Massé 500');
+          try {
+            const leaflet = await loadLeaflet();
+            map = leaflet.map(mapElement).setView(center, 14);
+            leaflet
+              .circle(center, {
+                radius: 2000,
+                color: '#ff6900',
+                fillColor: '#ff6900',
+                fillOpacity: 0.16,
+              })
+              .addTo(map);
+
+            leaflet
+              .tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors',
+                maxZoom: 19,
+              })
+              .addTo(map);
+            leaflet.marker(center).addTo(map).bindPopup('Bialet Massé 500');
+          } catch {
+            toggle.setAttribute('aria-expanded', 'false');
+            mapElement.hidden = true;
+            caption.classList.add('hidden');
+          } finally {
+            toggle.disabled = false;
+          }
         }
       });
     }
