@@ -11,7 +11,7 @@ export const SITE = {
   email: 'consultas@julietaalmada.ar',
   tagline: 'Psicopedagoga & docente',
   description:
-    'Trabajo junto a niños, adolescentes y familias para comprender qué está sucediendo en cada proceso de aprendizaje y encontrar estrategias posibles para avanzar.',
+    'Evaluación y tratamiento psicopedagógico con orientación neuropsicológica para niños y adolescentes. Atención a familias en Flores y Caballito, CABA.',
   status: 'Agenda abierta para entrevistas de admisión',
   social: [
     // { label: 'LinkedIn', href: 'https://www.linkedin.com/in/your-username' },
