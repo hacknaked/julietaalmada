@@ -12,7 +12,7 @@ something that looks intentional on day one, without a component library you did
 <br />
 
 <div align="center">
-  <img src="./public/og-image.png" alt="Portfolio Starter preview" width="100%" style="max-width: 720px; border-radius: 8px;" />
+  <img src="./public/og-image.jpg" alt="Julieta Almada contacto" width="100%" style="max-width: 720px; border-radius: 8px;" />
 </div>
 
 <br />
@@ -89,7 +89,7 @@ these tokens, so changing them re-skins the whole site.
 **Fonts.** Swap the three families in the `fonts` array in `astro.config.mjs`. Any
 family available from Google Fonts works — Astro self-hosts it automatically.
 
-**Open Graph image.** Replace `public/og-image.png` with your own 1200×630 image.
+**Open Graph image.** Replace `public/og-image.jpg` with your own 1200×630 image.
 
 ## Deploying
 

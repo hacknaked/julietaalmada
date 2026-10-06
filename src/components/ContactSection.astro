@@ -25,7 +25,7 @@ import { SITE } from '@/site.config';
       <button
         id="service-area-toggle"
         type="button"
-        class="inline-flex items-center gap-2 hover:underline"
+        class="inline-flex cursor-pointer items-center gap-2 hover:underline"
         aria-expanded="false"
         aria-controls="service-area-map"
       >
@@ -74,33 +74,41 @@ import { SITE } from '@/site.config';
     crossorigin=""
   ></script>
   <script is:inline>
-    const center = [-34.63505, -58.4587];
-    const toggle = document.getElementById('service-area-toggle');
-    const mapElement = document.getElementById('service-area-map');
-    const caption = document.getElementById('service-area-caption');
-    let map;
+    function initContactMap() {
+      const toggle = document.getElementById('service-area-toggle');
+      const mapElement = document.getElementById('service-area-map');
+      const caption = document.getElementById('service-area-caption');
 
-    toggle.addEventListener('click', () => {
-      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
-      toggle.setAttribute('aria-expanded', String(!isOpen));
-      mapElement.hidden = isOpen;
-      caption.classList.toggle('hidden', isOpen);
+      if (!toggle || !mapElement || !caption || toggle.dataset.initialized === 'true') return;
 
-      if (!isOpen && !map) {
-        map = L.map(mapElement).setView(center, 14);
-        L.circle(center, {
-          radius: 2000,
-          color: '#ff6900',
-          fillColor: '#ff6900',
-          fillOpacity: 0.16,
-        }).addTo(map);
+      toggle.dataset.initialized = 'true';
+      const center = [-34.63505, -58.4587];
+      let map;
 
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '&copy; OpenStreetMap contributors',
-          maxZoom: 19,
-        }).addTo(map);
-        L.marker(center).addTo(map).bindPopup('Bialet Massé 500');
-      }
-    });
+      toggle.addEventListener('click', () => {
+        const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!isOpen));
+        mapElement.hidden = isOpen;
+        caption.classList.toggle('hidden', isOpen);
+
+        if (!isOpen && !map) {
+          map = L.map(mapElement).setView(center, 14);
+          L.circle(center, {
+            radius: 2000,
+            color: '#ff6900',
+            fillColor: '#ff6900',
+            fillOpacity: 0.16,
+          }).addTo(map);
+
+          L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors',
+            maxZoom: 19,
+          }).addTo(map);
+          L.marker(center).addTo(map).bindPopup('Bialet Massé 500');
+        }
+      });
+    }
+
+    document.addEventListener('astro:page-load', initContactMap);
   </script>
 </section>
