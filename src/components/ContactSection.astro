@@ -1,0 +1,106 @@
+---
+import LocationIcon from '@/assets/icons/location.svg';
+import MailIcon from '@/assets/icons/mail.svg';
+import WhatsAppIcon from '@/assets/icons/whatsapp.svg';
+import SectionHeading from '@/components/SectionHeading.astro';
+import { SITE } from '@/site.config';
+---
+
+<section id="hablemos" class="mx-auto max-w-3xl px-6 pb-24">
+  <SectionHeading eyebrow="Hablemos" />
+
+  <div class="text-ink-soft prose prose-sm sm:prose-base max-w-xl">
+    <img src="/hablemos.jpeg" alt="" aria-hidden="true" class="mx-auto mb-6 rounded-xl" />
+    <p class="font-display text-ink max-w-lg text-2xl sm:text-3xl">
+      ¿Querés hacer una consulta o coordinar una entrevista?
+    </p>
+
+    <p class="text-ink-soft max-w-xl">
+      {SITE.description}
+    </p>
+  </div>
+
+  <ul class="text-signal text-md mt-4 space-y-2 font-extralight tracking-wider">
+    <li>
+      <button
+        id="service-area-toggle"
+        type="button"
+        class="inline-flex items-center gap-2 hover:underline"
+        aria-expanded="false"
+        aria-controls="service-area-map"
+      >
+        <LocationIcon aria-hidden="true" class="h-4 w-4" />
+        Flores, Caballito, CABA
+      </button>
+    </li>
+    <li>
+      <a
+        href="https://wa.me/5491140959318"
+        class="inline-flex items-center gap-2 hover:underline"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <WhatsAppIcon aria-hidden="true" class="h-4 w-4" />
+        +54 9 11 4095-9318
+      </a>
+    </li>
+    <li>
+      <a href={`mailto:${SITE.email}`} class="inline-flex items-center gap-2 hover:underline">
+        <MailIcon aria-hidden="true" class="h-4 w-4" />
+        {SITE.email}
+      </a>
+    </li>
+  </ul>
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
+  <div
+    id="service-area-map"
+    class="mt-6 h-80 max-w-xl overflow-hidden rounded-xl"
+    aria-label="Área aproximada de atención"
+    hidden
+  ></div>
+  <p id="service-area-caption" class="text-ink-soft mt-2 hidden text-xs">
+    Área aproximada de atención
+  </p>
+  <script
+    is:inline
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
+  <script is:inline>
+    const center = [-34.63505, -58.4587];
+    const toggle = document.getElementById('service-area-toggle');
+    const mapElement = document.getElementById('service-area-map');
+    const caption = document.getElementById('service-area-caption');
+    let map;
+
+    toggle.addEventListener('click', () => {
+      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!isOpen));
+      mapElement.hidden = isOpen;
+      caption.classList.toggle('hidden', isOpen);
+
+      if (!isOpen && !map) {
+        map = L.map(mapElement).setView(center, 14);
+        L.circle(center, {
+          radius: 2000,
+          color: '#ff6900',
+          fillColor: '#ff6900',
+          fillOpacity: 0.16,
+        }).addTo(map);
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; OpenStreetMap contributors',
+          maxZoom: 19,
+        }).addTo(map);
+        L.marker(center).addTo(map).bindPopup('Bialet Massé 500');
+      }
+    });
+  </script>
+</section>

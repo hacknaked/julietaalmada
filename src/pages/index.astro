@@ -1,9 +1,8 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Button from '@/components/Button.astro';
+import ContactSection from '@/components/ContactSection.astro';
 import SectionHeading from '@/components/SectionHeading.astro';
-import MailIcon from '@/assets/icons/mail.svg';
-import WhatsAppIcon from '@/assets/icons/whatsapp.svg';
 import { SITE } from '@/site.config';
 
 const base = import.meta.env.BASE_URL.endsWith('/')
@@ -88,37 +87,5 @@ const sobreMiPath = `${base}sobre-mi`;
     </a>
   </section>
 
-  <section id="hablemos" class="mx-auto max-w-3xl px-6 pb-24">
-    <SectionHeading eyebrow="Hablemos" />
-
-    <div class="text-ink-soft prose prose-sm sm:prose-base max-w-xl">
-      <img src="/hablemos.jpeg" alt="" aria-hidden="true" class="mx-auto mb-6 rounded-xl" />
-      <p class="font-display text-ink max-w-lg text-2xl sm:text-3xl">
-        ¿Querés hacer una consulta o coordinar una entrevista?
-      </p>
-
-      <p class="text-ink-soft max-w-xl">
-        {SITE.description}
-      </p>
-    </div>
-
-    <div
-      class="text-signal text-md mt-4 flex flex-wrap items-center gap-2 font-extralight tracking-wider"
-    >
-      <a href={`mailto:${SITE.email}`} class="inline-flex items-center gap-2 hover:underline">
-        <MailIcon aria-hidden="true" class="h-4 w-4" />
-        {SITE.email}
-      </a>
-      <span aria-hidden="true">•</span>
-      <a
-        href="https://wa.me/5491140959318"
-        class="inline-flex items-center gap-2 hover:underline"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <WhatsAppIcon aria-hidden="true" class="h-4 w-4" />
-        +54 9 11 4095-9318
-      </a>
-    </div>
-  </section>
+  <ContactSection />
 </BaseLayout>
