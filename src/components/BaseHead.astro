@@ -26,7 +26,7 @@ const imagePath = image
   ? image.startsWith('/')
     ? `${base}${image.slice(1)}`
     : image
-  : `${base}og-image.png`;
+  : `${base}og-image.jpg`;
 const socialImage = new URL(imagePath, Astro.site);
 ---
 
