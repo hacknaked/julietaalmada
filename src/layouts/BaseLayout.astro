@@ -18,7 +18,7 @@ const { title, description = SITE.description, image = '/og-image.png' } = Astro
 <html lang={SITE.locale}>
   <head>
     <!-- Google Tag Manager -->
-    <script>
+    <script is:inline>
       (function (w, d, s, l, i) {
         w[l] = w[l] || [];
         w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
