@@ -1,105 +1,77 @@
-<div align="center">
+# Julieta Almada
 
-# Portfolio Starter
+Sitio profesional de Julieta Almada, psicopedagoga y docente. Presenta sus áreas de trabajo,
+información profesional y medios de contacto.
 
-A minimal, professional portfolio template for **Astro**. Built for people who want
-something that looks intentional on day one, without a component library you didn't ask for.
+Producción: [julietaalmada.ar](https://julietaalmada.ar)
 
-[**Live Demo**](https://astro-starter-portfolio.vercel.app) · [Report an issue](https://github.com/BracoZS/astro-starter-portfolio/issues)
+## Tecnologías
 
-</div>
+- Astro 7 con salida estática
+- Tailwind CSS 4
+- TypeScript
+- Sharp para optimización de imágenes
+- Leaflet y OpenStreetMap para el área de atención
+- GitHub Pages para hosting
 
-<br />
+## Requisitos
 
-<div align="center">
-  <img src="./public/og-image.jpg" alt="Julieta Almada contacto" width="100%" style="max-width: 720px; border-radius: 8px;" />
-</div>
+- Node.js 22 o superior
+- pnpm
 
-<br />
-
-## Features
-
-- **Astro 7** — static output, zero client-side JavaScript by default
-- **Tailwind CSS v4** — CSS-first config, no `tailwind.config.js` needed
-- **Light & dark mode** — class-based, no flash of unstyled theme on load
-- **Astro Fonts API** — self-hosted Google Fonts, zero layout shift, no third-party requests
-- **View Transitions** — smooth navigation between pages
-- **SEO defaults done right** — canonical URLs, Open Graph, Twitter cards, auto-generated sitemap
-- **Strict TypeScript** — `astro/tsconfigs/strict`, path aliases (`@/components/*`, etc.)
-- **Prettier**, pre-configured for `.astro` files and Tailwind class sorting
-- One accent color and two font variables control the entire visual identity
-
-No state management, no UI kit, no CMS integration —
-add those yourself if your project actually needs them.
-
-## Quick start
+## Desarrollo local
 
 ```bash
-git clone https://github.com/BracoZS/astro-starter-portfolio.git
-cd astro-starter-portfolio
 pnpm install
 pnpm dev
 ```
 
-> Any package manager works.
+El servidor local queda disponible en `http://localhost:4321`.
 
-Open `http://localhost:4321`.
+## Comandos
 
-| Command        | Action                                             |
-| -------------- | -------------------------------------------------- |
-| `pnpm dev`     | Start the local dev server                         |
-| `pnpm build`   | Type-check, then build for production to `./dist/` |
-| `pnpm preview` | Preview the production build locally               |
-| `pnpm check`   | Run `astro check` only                             |
-| `pnpm format`  | Format the project with Prettier                   |
+| Comando             | Descripción                                                     |
+| ------------------- | --------------------------------------------------------------- |
+| `pnpm dev`          | Inicia el servidor de desarrollo                                |
+| `pnpm build`        | Valida el proyecto y genera la versión de producción en `dist/` |
+| `pnpm preview`      | Sirve localmente el build de producción                         |
+| `pnpm check`        | Ejecuta las validaciones de Astro y TypeScript                  |
+| `pnpm format`       | Formatea el proyecto con Prettier                               |
+| `pnpm format:check` | Comprueba el formato sin modificar archivos                     |
 
-## Project structure
+## Estructura
 
 ```text
-├── public/
-│   ├── favicon.svg
-│   ├── favicons/
-│   ├── og-image.png          # replace with your own 1200×630 image
-│   └── robots.txt
-├── src/
-│   ├── assets/               # static images and assets
-│   ├── components/           # BaseHead, Button, Footer, Header, SectionHeading, ThemeToggle
-│   ├── layouts/
-│   │   └── BaseLayout.astro  # <head>, SEO, fonts, theme script
-│   ├── pages/
-│   │   ├── index.astro
-│   │   ├── sobre-mi.astro
-│   │   └── 404.astro
-│   ├── styles/
-│   │   └── global.css        # design tokens + Tailwind import
-│   └── site.config.ts        # name, bio, email, social links
-├── astro.config.mjs
-└── tsconfig.json
+src/
+├── assets/
+│   ├── icons/
+│   └── images/
+├── components/
+│   └── ContactSection.astro
+├── layouts/
+│   └── BaseLayout.astro
+├── pages/
+│   ├── 404.astro
+│   ├── index.astro
+│   └── sobre-mi.astro
+├── site.config.ts
+└── styles/
+    └── global.css
 ```
 
-## Customizing
+Los datos generales del sitio, como nombre, descripción, email y navegación, se encuentran en
+`src/site.config.ts`. Los colores y estilos globales están definidos en `src/styles/global.css`.
 
-**Your info.** Edit `src/site.config.ts` — name, tagline, email, and social links are
-read from this one file by the header, footer, and homepage.
+Las imágenes de contenido se guardan en `src/assets/images/` y Astro genera variantes responsivas
+en AVIF, WebP y JPG durante el build. Los favicons, el archivo `CNAME`, `robots.txt` y la imagen
+social permanecen en `public/` porque deben conservar rutas públicas estables.
 
-**Colors.** Edit the five custom properties at the top of `src/styles/global.css`
-(`--paper`, `--ink`, `--ink-soft`, `--signal`, `--line`). Every component reads from
-these tokens, so changing them re-skins the whole site.
+## Producción
 
-**Fonts.** Swap the three families in the `fonts` array in `astro.config.mjs`. Any
-family available from Google Fonts works — Astro self-hosts it automatically.
+Cada push a `main` ejecuta el workflow `.github/workflows/deploy.yml`. La acción oficial de Astro:
 
-**Open Graph image.** Replace `public/og-image.jpg` with your own 1200×630 image.
+1. Instala las dependencias con pnpm.
+2. Ejecuta `pnpm build`.
+3. Publica el contenido generado en `dist/` mediante GitHub Pages.
 
-## Deploying
-
-This is a static site — it deploys anywhere that serves static files. See Astro's
-[deployment guides](https://docs.astro.build/en/guides/deploy/) for
-Vercel, Netlify, Cloudflare Pages, and others. Remember to update the `site` value
-in `astro.config.mjs` to your real domain before building — it's used for the
-sitemap and canonical URLs.
-
-## License
-
-MIT — see [LICENSE](./LICENSE). Free to use for personal or commercial projects,
-attribution appreciated but not required.
+El dominio canónico está configurado en `astro.config.mjs` y en `public/CNAME`.
